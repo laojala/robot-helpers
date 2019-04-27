@@ -1,0 +1,8 @@
+*.html
+*.xml
+*.json
+*.xlsx
+*/created/
+
+
+.DS_Store

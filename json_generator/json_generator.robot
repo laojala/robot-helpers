@@ -4,13 +4,13 @@ Documentation   Script creates .json files from Excel
 ...     
 ...             To run the example test.xlxs: robot js_file_generator.robot
 ...
-...             Excel must have following formatting:
-...                 * row 1: name for output file, example: "en-US"
-...                 * column A: json keys
-...                 * column B: comments, not included in json
-...                 * column C onwards: json values
-...                 * nested list: key is marked with [], example [Months]
-...                 * comments: keys that start with // not included in the json
+...             Excel must be in a following format:
+...             * row 1: name of the output files, example: "en-US", "ja-JP"
+...             * column A: json keys
+...             * column B: comments, not included in the output files
+...             * column C onwards: json values
+...             * nested list: key is marked with brackets, for example [Months]
+...             * comments: keys that start with // are not included in the json
 
 Library         Collections
 Library         OperatingSystem
@@ -18,7 +18,7 @@ Library         String
 Library         ExcelRobot  # to install: pip install robotframework-excel --upgrade
 
 
-Test Setup      Open Excel   ${EXCEL}
+Task Setup      Open Excel   ${EXCEL}
 
 *** Variables ***
 
@@ -30,17 +30,21 @@ ${FOLDER_JSON}  ./created
 *** Tasks ***
 
 Generate Json From Excel
-    ${keys}=                Get Column Values       0
-    ${column_count}         Get Column Count        ${SHEET}
-    FOR  ${index}  IN RANGE  2  ${column_count}
-        ${values}           Get Column Values       ${index}
-        ${dictionary}       Make Custom Dictionary  ${keys}         ${values}
-        ${language}         Read Cell Data          ${SHEET}        ${index}   0
-        Create File         ${language}             ${dictionary}
-    END
+    ${json_keys}=           Get Column Values           0
+    Read Values And Create JSON File For Each Column    ${json_keys}
 
 *** Keywords ***
-    
+
+Read Values And Create JSON File For Each Column
+    [Arguments]  ${keys} 
+    ${column_count}         Get Column Count        ${SHEET}
+        FOR  ${index}  IN RANGE  2  ${column_count}
+            ${values}           Get Column Values       ${index}
+            ${dictionary}       Make Custom Dictionary  ${keys}         ${values}
+            ${language}         Read Cell Data          ${SHEET}        ${index}   0
+            Create File         ${language}             ${dictionary}
+        END
+
 Create File    
     [Arguments]     ${language}  ${dictionary}
     ${json_string}          Evaluate    json.dumps(${dictionary}, indent=4, ensure_ascii=False).encode('utf8')    json                  

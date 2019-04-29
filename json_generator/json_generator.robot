@@ -15,7 +15,10 @@ Documentation   Script creates .json files from Excel
 Library         Collections
 Library         OperatingSystem
 Library         String
-Library         ExcelRobot  # to install: pip install robotframework-excel --upgrade
+Library         ExcelRobot      # to install: pip install robotframework-excel --upgrade
+Library         JSONLibrary     #to install: pip install -U robotframework-jsonlibrary
+Library         JsonHelper
+
 
 
 Task Setup      Open Excel   ${EXCEL}
@@ -24,19 +27,28 @@ Task Setup      Open Excel   ${EXCEL}
 
 ${EXCEL}        ${CURDIR}/test/test.xlsx
 ${SHEET}        Sheet1
-${FOLDER_JSON}  ./created
+${FOLDER_JSON}  ./generated
 
 
 *** Tasks ***
 
 Generate Json From Excel
-    ${json_keys}=           Get Column Values           0
-    Read Values And Create JSON File For Each Column    ${json_keys}
+    Read Values And Create JSON File For Each Column
+
+Test Generator Script
+    [Documentation]     Runs Json Generator
+    ...                 Compares resulting vi-VN_original.json to the result            
+    Read Values And Create JSON File For Each Column
+    ${original_json}    Load JSON From File     ./test/vi-VN_original.json
+    ${generated_json}   Load JSON From File     ./${FOLDER_JSON}/vi-VN.json
+    Dictionaries Should Be Equal                ${original_json}    ${generated_json} 
+
+
 
 *** Keywords ***
 
 Read Values And Create JSON File For Each Column
-    [Arguments]  ${keys} 
+    ${keys}=                Get Column Values           0
     ${column_count}         Get Column Count        ${SHEET}
         FOR  ${index}  IN RANGE  2  ${column_count}
             ${values}           Get Column Values       ${index}

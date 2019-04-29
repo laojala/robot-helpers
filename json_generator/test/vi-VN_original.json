@@ -1,0 +1,18 @@
+{
+    "Filters": "Lọc",
+    "Mammal": "Động vật có vú",
+    "Fish": "Một con cá",
+    "Bug": "Côn trùng",
+    "FavoriteAnimals": [
+        "Con ngựa",
+        "Chó"
+    ],
+    "SaveToThisPage": "Lưu vào trang này",
+    "AnimalNames": [
+        "",
+        "Trò đùa",
+        "Moomoo"
+    ],
+    "SomeKey": "",
+    "SomeOtherKey": "Một chìa khóa khác"
+}

@@ -22,7 +22,7 @@ Excel must be in a following format:
 * column A: json keys
 * column B: comments, not included in the output files
 * column C onwards: json values
-* nested list: key is marked with brackets, for example [Months]
+* nested list: key is marked with brackets, for example [Months]. Works also without brackets.
 * comments: keys that start with // are not included in the json
 
 ### Future considerations

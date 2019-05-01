@@ -3,6 +3,7 @@
 *.json
 *.xlsx
 */created/
+*.pyc
 
 
 .DS_Store

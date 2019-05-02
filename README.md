@@ -1,9 +1,10 @@
 # Robot Helpers
+
 [Robot Framework](http://robotframework.org/) scripts I utilize at work.
 
 ## JSON generator
 
-Creates json files from the excel columns. 
+Creates json files from the excel columns.
 
 ### To run the example
 
@@ -27,4 +28,4 @@ Excel must be in a following format:
 
 ### Future considerations
 
-Write logic using Python/JavaScript and extend Robot Library. Might utilize existing excel to json libraries.
+Drop JSONLibrary and ExcelRobot libraries and write keywords directly using Python.

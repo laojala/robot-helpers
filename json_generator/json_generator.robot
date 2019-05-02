@@ -34,17 +34,16 @@ Generate Json From Excel
     Read Values And Create JSON File For Each Column
     Test Generator Script
 
-
 *** Keywords ***
 
 Read Values And Create JSON File For Each Column
-    ${keys}=                Get Column Values As List       0
-    ${column_count}         Get Column Count                ${SHEET}
+    ${keys}=                Get Column As List          ${EXCEL}    ${SHEET}  0
+    ${column_count}         Get Column Count Custom     ${EXCEL}    ${SHEET}
         FOR  ${index}  IN RANGE  2  ${column_count}
-            ${values}           Get Column Values As List   ${index}
-            ${dictionary}       Make Custom Dictionary      ${keys}         ${values}
-            ${language}         Read Cell Data              ${SHEET}        ${index}   0
-            Create File         ${language}                 ${dictionary}
+            ${values}           Get Column As List      ${EXCEL}    ${SHEET}   ${index}
+            ${dictionary}       Make Custom Dictionary  ${keys}     ${values}
+            ${language}         Read Cell Data          ${SHEET}        ${index}   0
+            Create File         ${language}             ${dictionary}
         END
 
 Make Custom Dictionary
@@ -63,18 +62,8 @@ Make Custom Dictionary
 
 Create File    
     [Arguments]  ${language}  ${dictionary}
-    ${json_string}          Evaluate    json.dumps(${dictionary}, indent=4, ensure_ascii=False).encode('utf8')    json                  
+    ${json_string}          Get JSON String                     ${dictionary}
     Create Binary File      ${FOLDER_JSON}/${language}.json     ${json_string}
-
-Get Column Values As List
-    [Arguments]     ${column}
-    ${keys}         Create List
-    ${rows}         Get Row Count   ${SHEET}
-    FOR  ${index}  IN RANGE  ${rows}
-        ${data}             Read Cell Data  ${SHEET}  ${column}  ${index}
-        Append To List      ${keys}  ${data}
-    END
-    [Return]                ${keys}
 
 Test Generator Script
     [Documentation]     Runs Json Generator

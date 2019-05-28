@@ -10,7 +10,7 @@ Creates json files from the excel columns.
 
 Project includes an example excel. To run the example:
 
-```
+```bash
 cd json_generator
 robot json_generator.robot
 ```
@@ -29,3 +29,7 @@ Excel must be in a following format:
 ### Future considerations
 
 Drop JSONLibrary and ExcelRobot libraries and write keywords directly using Python.
+
+## Selenium Library Helpers
+
+Helper keywords to click nth and last of a kind element on a page. Keywords utilize [Selenium Library](http://robotframework.org/SeleniumLibrary/).

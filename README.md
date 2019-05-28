@@ -4,11 +4,11 @@
 
 ## JSON generator
 
-Creates json files from the excel columns.
+Creates json files from the Excel columns.
 
 ### To run the example
 
-Project includes an example excel. To run the example:
+Project includes an example Excel. To run the example:
 
 ```bash
 cd json_generator
